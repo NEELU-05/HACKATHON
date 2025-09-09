@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEGALODON - Login</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    /* ==========================
+       🔹 Global Styles
+    ========================== */
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Highlight input box on focus */
+    .input-focus:focus {
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Smooth button hover effect */
+    .btn-hover {
+      transition: all 0.3s ease;
+    }
+    .btn-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Ocean gradient background */
+    .ocean-bg {
+      background: linear-gradient(120deg, #1e40af, #0ea5e9, #06b6d4);
+    }
+  </style>
+</head>
+
+<body class="ocean-bg min-h-screen flex items-center justify-center p-4">
+  <!-- ==========================
+       🔹 Login Card Container
+  ========================== -->
+  <div class="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden">
+
+    <!-- Header / Branding -->
+    <div class="py-6 px-8 bg-gradient-to-r from-blue-600 to-cyan-500 text-center">
+      <span class="material-icons text-white mb-2" style="font-size: 48px;">waves</span>
+      <h1 class="text-2xl font-bold text-white">MEGALODON</h1>
+      <p class="text-blue-100 mt-2">Marine Monitoring Dashboard</p>
+    </div>
+
+    <!-- ==========================
+         🔹 Login Form
+    ========================== -->
+    <div class="px-8 pt-8 pb-6">
+      <form id="loginForm">
+
+        <!-- Email Field -->
+        <div class="mb-5">
+          <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
+          <div class="relative">
+            <!-- Left icon -->
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <span class="material-icons text-gray-400">person</span>
+            </div>
+            <!-- Input -->
+            <input type="email" id="email" 
+              class="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg input-focus focus:outline-none focus:border-blue-500 transition-colors" 
+              placeholder="you@example.com" required>
+          </div>
+          <!-- Error message -->
+          <p id="emailError" class="text-red-500 text-xs mt-1 hidden">
+            Please enter a valid email address
+          </p>
+        </div>
+
+        <!-- Password Field -->
+        <div class="mb-5">
+          <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+          <div class="relative">
+            <!-- Left icon -->
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+              <span class="material-icons text-gray-400">lock</span>
+            </div>
+            <!-- Input -->
+            <input type="password" id="password" 
+              class="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg input-focus focus:outline-none focus:border-blue-500 transition-colors" 
+              placeholder="••••••••" required>
+            <!-- Show/Hide toggle button -->
+            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <span class="material-icons text-gray-400">visibility</span>
+            </button>
+          </div>
+          <!-- Error message -->
+          <p id="passwordError" class="text-red-500 text-xs mt-1 hidden">
+            Password must be at least 8 characters
+          </p>
+        </div>
+
+        <!-- Remember Me + Forgot Password -->
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center">
+            <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+            <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+          </div>
+          <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium">Forgot Password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium btn-hover hover:bg-blue-700 flex items-center justify-center">
+          <span id="loginText">Sign In</span>
+          <span id="loginSpinner" class="hidden ml-2">
+            <span class="material-icons text-white animate-spin" style="font-size: 18px;">autorenew</span>
+          </span>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="flex items-center my-6">
+        <div class="flex-1 border-t border-gray-200"></div>
+        <div class="px-3 text-sm text-gray-500">Demo Credentials</div>
+        <div class="flex-1 border-t border-gray-200"></div>
+      </div>
+
+      <!-- Demo Credentials Box
+      <div class="bg-blue-50 p-4 rounded-lg mb-4">
+        <p class="text-sm text-blue-700">Email: <span class="font-mono">admin@oceanwatch.org</span></p>
+        <p class="text-sm text-blue-700">Password: <span class="font-mono">password123</span></p>
+      </div>-->
+      <!-- Signup Link -->
+      <div class="text-center">
+        <p class="text-sm text-gray-600">
+          Don't have an account? 
+          <a href="#" class="text-blue-600 font-medium hover:text-blue-800">Request access</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================
+       🔹 JavaScript
+       (Already clear & commented)
+  ========================== -->
+<script>
+    // ================================
+    // 🔑 Toggle Password Visibility
+    // ================================
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        
+        // Switch between "password" (hidden) and "text" (visible)
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // Change the eye icon depending on state
+        const icon = this.querySelector('span');
+        icon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+    });
+
+    // ================================
+    // 📧 Email & Password Validation
+    // ================================
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    // Validate email when user leaves the input box
+    emailInput.addEventListener('blur', function() {
+        if (!this.value || !this.value.includes('@')) {
+            emailError.classList.remove('hidden'); // Show error message
+        } else {
+            emailError.classList.add('hidden'); // Hide error if valid
+        }
+    });
+
+    // Validate password when user leaves the input box
+    passwordInput.addEventListener('blur', function() {
+        if (!this.value || this.value.length < 8) {
+            passwordError.classList.remove('hidden'); // Show error message
+        } else {
+            passwordError.classList.add('hidden'); // Hide error if valid
+        }
+    });
+
+    // ================================
+    // 🚪 Handle Login Form Submission
+    // ================================
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Stop page reload
+
+        let isValid = true;
+
+        // Check email validity
+        if (!emailInput.value || !emailInput.value.includes('@')) {
+            emailError.classList.remove('hidden');
+            isValid = false;
+        }
+
+        // Check password validity
+        if (!passwordInput.value || passwordInput.value.length < 8) {
+            passwordError.classList.remove('hidden');
+            isValid = false;
+        }
+
+        // Stop here if inputs are invalid
+        if (!isValid) return;
+
+        // Show "loading" spinner & change button text
+        const loginText = document.getElementById('loginText');
+        const loginSpinner = document.getElementById('loginSpinner');
+        loginText.textContent = 'Signing In...';
+        loginSpinner.classList.remove('hidden');
+
+        // Simulate server login request (fake delay for demo)
+        setTimeout(() => {
+            // Demo credentials (hardcoded for testing)
+            const validEmail = 'admin@oceanwatch.org';
+            const validPassword = 'password123';
+            
+            if (emailInput.value === validEmail && passwordInput.value === validPassword) {
+                // ✅ Successful login
+                // Save login state in browser's local storage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', emailInput.value);
+                
+                // Redirect to dashboard page
+                window.location.href = 'dashboard.html';
+            } else {
+                // ❌ Invalid login attempt
+                alert('Invalid credentials. Please use the demo credentials provided.');
+                
+                // Reset button text & hide spinner
+                loginText.textContent = 'Sign In';
+                loginSpinner.classList.add('hidden');
+            }
+        }, 1500); // 1.5 second fake "loading" time
+    });
+
+    // ================================
+    // 🔄 Auto-Redirect If Already Logged In
+    // ================================
+    window.addEventListener('load', function() {
+        // If user is already logged in, skip login page
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'dashboard/dashboard.html';
+        }
+    });
+</script>
+
+</body>
+</html>
