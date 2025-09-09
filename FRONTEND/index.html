@@ -153,13 +153,13 @@
     // ================================
     // 🔑 Toggle Password Visibility
     // ================================
-    document.getElementById('togglePassword').addEventListener('click', function() {
+    document.getElementById('togglePassword').addEventListener('click', function () {
         const passwordInput = document.getElementById('password');
-        
+
         // Switch between "password" (hidden) and "text" (visible)
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
         passwordInput.setAttribute('type', type);
-        
+
         // Change the eye icon depending on state
         const icon = this.querySelector('span');
         icon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
@@ -174,7 +174,7 @@
     const passwordError = document.getElementById('passwordError');
 
     // Validate email when user leaves the input box
-    emailInput.addEventListener('blur', function() {
+    emailInput.addEventListener('blur', function () {
         if (!this.value || !this.value.includes('@')) {
             emailError.classList.remove('hidden'); // Show error message
         } else {
@@ -183,7 +183,7 @@
     });
 
     // Validate password when user leaves the input box
-    passwordInput.addEventListener('blur', function() {
+    passwordInput.addEventListener('blur', function () {
         if (!this.value || this.value.length < 8) {
             passwordError.classList.remove('hidden'); // Show error message
         } else {
@@ -194,7 +194,7 @@
     // ================================
     // 🚪 Handle Login Form Submission
     // ================================
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
         e.preventDefault(); // Stop page reload
 
         let isValid = true;
@@ -225,19 +225,19 @@
             // Demo credentials (hardcoded for testing)
             const validEmail = 'admin@oceanwatch.org';
             const validPassword = 'password123';
-            
+
             if (emailInput.value === validEmail && passwordInput.value === validPassword) {
                 // ✅ Successful login
                 // Save login state in browser's local storage
                 localStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('userEmail', emailInput.value);
-                
-                // Redirect to dashboard page
-                window.location.href = 'dashboard.html';
+
+                // Redirect to dashboard folder (Vercel-safe)
+                window.location.href = '/dashboard/';
             } else {
                 // ❌ Invalid login attempt
                 alert('Invalid credentials. Please use the demo credentials provided.');
-                
+
                 // Reset button text & hide spinner
                 loginText.textContent = 'Sign In';
                 loginSpinner.classList.add('hidden');
@@ -248,10 +248,10 @@
     // ================================
     // 🔄 Auto-Redirect If Already Logged In
     // ================================
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
         // If user is already logged in, skip login page
         if (localStorage.getItem('isLoggedIn') === 'true') {
-            window.location.href = 'dashboard/dashboard.html';
+            window.location.href = '/dashboard/';
         }
     });
 </script>
