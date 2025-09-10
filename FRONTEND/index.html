@@ -1,260 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEGALODON - Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oceanguard login</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap);
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'roboto', sans-serif;
+        }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('marine.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
 
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 99;
+            background-color: rgba(0, 20, 40, 0.5);
+        }
 
-  <!-- Custom CSS -->
-  <style>
-    /* ==========================
-       🔹 Global Styles
-    ========================== */
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
+        .logo {
+            font-size: 2em;
+            color: white;
+            user-select: none;
+        }
 
-    /* Highlight input box on focus */
-    .input-focus:focus {
-      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
-    }
+        .navigation a {
+            position: relative;
+            font-size: 1.1em;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 40px;
+        }
 
-    /* Smooth button hover effect */
-    .btn-hover {
-      transition: all 0.3s ease;
-    }
-    .btn-hover:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
-    }
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: #fff;
+            border-radius: 5px;
+            left: 0;
+            bottom: -6px;
+            transform-origin: right;
+            transform: scaleX(0);
+            transition: transform .5s;
+        }
 
-    /* Ocean gradient background */
-    .ocean-bg {
-      background: linear-gradient(120deg, #1e40af, #0ea5e9, #06b6d4);
-    }
-  </style>
+        .navigation a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .navigation .btnLogin-popup {
+            width: 130px;
+            height: 50px;
+            background: transparent;
+            border: 2px solid white;
+            outline: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 500;
+            margin-left: 40px;
+            transition: .5s;
+        }
+
+        .navigation .btnLogin-popup:hover {
+            background: #fff;
+            color: #162938;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 400px;
+            height: 460px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, .5);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transform: scale(0);
+            transition: transform .5s ease, height .2s ease;
+        }
+
+        .wrapper.active-popup {
+            transform: scale(1);
+        }
+
+        .wrapper.active {
+            height: 520px;
+        }
+
+        .wrapper .form-box {
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+        }
+
+        .wrapper .form-box.login {
+            transition: transform .18s ease;
+            transform: translateX(0);
+        }
+
+        .wrapper.active .form-box.login {
+            transition: none;
+            transform: translateX(-400px);
+        }
+
+        .wrapper .form-box.register {
+            position: absolute;
+            transition: none;
+            transform: translateX(400px);
+        }
+
+        .wrapper.active .form-box.register {
+            transition: transform .18s ease;
+            transform: translateX(0);
+        }
+
+        .wrapper .icon-close {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 45px;
+            height: 45px;
+            background: #162938;
+            font-size: 2em;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom-left-radius: 20px;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .form-box h2 {
+            font-size: 2em;
+            color: #162938;
+            text-align: center;
+        }
+
+        .input-box {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            border-bottom: 2px solid #162938;
+            margin: 30px 0;
+        }
+
+        .input-box label {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            color: #162938;
+            font-size: 1em;
+            transform: translateY(-50%);
+            font-weight: 500;
+            pointer-events: none;
+            transition: .5s;
+        }
+
+        .input-box input:focus+label,
+        .input-box input:valid+label {
+            top: -5px;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 1em;
+            color: #162938;
+            font-weight: 600;
+            padding: 0 35px 0 5px;
+        }
+
+        .input-box .icon {
+            position: absolute;
+            right: 8px;
+            font-size: 1.2em;
+            color: #162938;
+            line-height: 57px;
+        }
+
+        .remember-forgot {
+            font-size: .9em;
+            color: #162938;
+            font-weight: 500;
+            margin: -15px 0 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .remember-forgot label input {
+            accent-color: #162938;
+            margin-right: 3px;
+        }
+
+        .remember-forgot a {
+            color: #162938;
+            text-decoration: none;
+        }
+
+        .remember-forgot a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            height: 45px;
+            background: #162938;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .login-register {
+            font-size: .9em;
+            color: #162938;
+            font-weight: 500;
+            text-align: center;
+            margin: 20px 0 0;
+        }
+
+        .login-register p a {
+            color: #162938;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-register p a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
-<body class="ocean-bg min-h-screen flex items-center justify-center p-4">
-  <!-- ==========================
-       🔹 Login Card Container
-  ========================== -->
-  <div class="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden">
+<body>
+    <header>
+        <h2 class="logo">Oceanguard</h2>
+        <nav class="navigation">
+            <a href="">Home</a>
+            <a href="">About</a>
+            <a href="">Services</a>
+            <a href="">Contact</a>
+            <button class="btnLogin-popup">Login</button>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <span class="icon-close"><ion-icon name="close"></ion-icon></span>
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" required>
+                    <label>Password</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register">
+                    <p>Don't have an account?<a href="#" class="register-link">Register</a></p>
+                </div>
+            </form>
+        </div>
 
-    <!-- Header / Branding -->
-    <div class="py-6 px-8 bg-gradient-to-r from-blue-600 to-cyan-500 text-center">
-      <span class="material-icons text-white mb-2" style="font-size: 48px;">waves</span>
-      <h1 class="text-2xl font-bold text-white">MEGALODON</h1>
-      <p class="text-blue-100 mt-2">Marine Monitoring Dashboard</p>
+        <div class="form-box register">
+            <h2>Registration</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" required>
+                    <label>Password</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox"> I agree to the terms & conditions</label>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="login-register">
+                    <p>Already have an account?<a href="#" class="login-link">Login</a></p>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <!-- ==========================
-         🔹 Login Form
-    ========================== -->
-    <div class="px-8 pt-8 pb-6">
-      <form id="loginForm">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-        <!-- Email Field -->
-        <div class="mb-5">
-          <label for="email" class="block text-gray-700 text-sm font-medium mb-2">Email Address</label>
-          <div class="relative">
-            <!-- Left icon -->
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <span class="material-icons text-gray-400">person</span>
-            </div>
-            <!-- Input -->
-            <input type="email" id="email" 
-              class="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg input-focus focus:outline-none focus:border-blue-500 transition-colors" 
-              placeholder="you@example.com" required>
-          </div>
-          <!-- Error message -->
-          <p id="emailError" class="text-red-500 text-xs mt-1 hidden">
-            Please enter a valid email address
-          </p>
-        </div>
+    <script>
+        const wrapper = document.querySelector('.wrapper');
+        const loginLink = document.querySelector('.login-link');
+        const registerLink = document.querySelector('.register-link');
+        const btnPopup = document.querySelector('.btnLogin-popup');
+        const iconClose = document.querySelector('.icon-close');
 
-        <!-- Password Field -->
-        <div class="mb-5">
-          <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
-          <div class="relative">
-            <!-- Left icon -->
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3">
-              <span class="material-icons text-gray-400">lock</span>
-            </div>
-            <!-- Input -->
-            <input type="password" id="password" 
-              class="w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg input-focus focus:outline-none focus:border-blue-500 transition-colors" 
-              placeholder="••••••••" required>
-            <!-- Show/Hide toggle button -->
-            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 flex items-center pr-3">
-              <span class="material-icons text-gray-400">visibility</span>
-            </button>
-          </div>
-          <!-- Error message -->
-          <p id="passwordError" class="text-red-500 text-xs mt-1 hidden">
-            Password must be at least 8 characters
-          </p>
-        </div>
+        registerLink.addEventListener('click', () => {
+            wrapper.classList.add('active');
+        });
 
-        <!-- Remember Me + Forgot Password -->
-        <div class="flex items-center justify-between mb-6">
-          <div class="flex items-center">
-            <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-            <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
-          </div>
-          <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium">Forgot Password?</a>
-        </div>
+        loginLink.addEventListener('click', () => {
+            wrapper.classList.remove('active');
+        });
 
-        <!-- Submit Button -->
-        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium btn-hover hover:bg-blue-700 flex items-center justify-center">
-          <span id="loginText">Sign In</span>
-          <span id="loginSpinner" class="hidden ml-2">
-            <span class="material-icons text-white animate-spin" style="font-size: 18px;">autorenew</span>
-          </span>
-        </button>
-      </form>
+        btnPopup.addEventListener('click', () => {
+            wrapper.classList.add('active-popup');
+            wrapper.classList.remove('active'); // Always show login first
+        });
 
-      <!-- Divider -->
-      <div class="flex items-center my-6">
-        <div class="flex-1 border-t border-gray-200"></div>
-        <div class="px-3 text-sm text-gray-500">Demo Credentials</div>
-        <div class="flex-1 border-t border-gray-200"></div>
-      </div>
-
-      <!-- Demo Credentials Box
-      <div class="bg-blue-50 p-4 rounded-lg mb-4">
-        <p class="text-sm text-blue-700">Email: <span class="font-mono">admin@oceanwatch.org</span></p>
-        <p class="text-sm text-blue-700">Password: <span class="font-mono">password123</span></p>
-      </div>-->
-      <!-- Signup Link -->
-      <div class="text-center">
-        <p class="text-sm text-gray-600">
-          Don't have an account? 
-          <a href="#" class="text-blue-600 font-medium hover:text-blue-800">Request access</a>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================
-       🔹 JavaScript
-       (Already clear & commented)
-  ========================== -->
-<script>
-    // ================================
-    // 🔑 Toggle Password Visibility
-    // ================================
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordInput = document.getElementById('password');
-
-        // Switch between "password" (hidden) and "text" (visible)
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-
-        // Change the eye icon depending on state
-        const icon = this.querySelector('span');
-        icon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
-    });
-
-    // ================================
-    // 📧 Email & Password Validation
-    // ================================
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-
-    // Validate email when user leaves the input box
-    emailInput.addEventListener('blur', function () {
-        if (!this.value || !this.value.includes('@')) {
-            emailError.classList.remove('hidden'); // Show error message
-        } else {
-            emailError.classList.add('hidden'); // Hide error if valid
-        }
-    });
-
-    // Validate password when user leaves the input box
-    passwordInput.addEventListener('blur', function () {
-        if (!this.value || this.value.length < 8) {
-            passwordError.classList.remove('hidden'); // Show error message
-        } else {
-            passwordError.classList.add('hidden'); // Hide error if valid
-        }
-    });
-
-    // ================================
-    // 🚪 Handle Login Form Submission
-    // ================================
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-        e.preventDefault(); // Stop page reload
-
-        let isValid = true;
-
-        // Check email validity
-        if (!emailInput.value || !emailInput.value.includes('@')) {
-            emailError.classList.remove('hidden');
-            isValid = false;
-        }
-
-        // Check password validity
-        if (!passwordInput.value || passwordInput.value.length < 8) {
-            passwordError.classList.remove('hidden');
-            isValid = false;
-        }
-
-        // Stop here if inputs are invalid
-        if (!isValid) return;
-
-        // Show "loading" spinner & change button text
-        const loginText = document.getElementById('loginText');
-        const loginSpinner = document.getElementById('loginSpinner');
-        loginText.textContent = 'Signing In...';
-        loginSpinner.classList.remove('hidden');
-
-        // Simulate server login request (fake delay for demo)
-        setTimeout(() => {
-            // Demo credentials (hardcoded for testing)
-            const validEmail = 'admin@oceanwatch.org';
-            const validPassword = 'password123';
-
-            if (emailInput.value === validEmail && passwordInput.value === validPassword) {
-                // ✅ Successful login
-                // Save login state in browser's local storage
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userEmail', emailInput.value);
-
-                // Redirect to dashboard folder (Vercel-safe)
-                window.location.href = '/dashboard/';
-            } else {
-                // ❌ Invalid login attempt
-                alert('Invalid credentials. Please use the demo credentials provided.');
-
-                // Reset button text & hide spinner
-                loginText.textContent = 'Sign In';
-                loginSpinner.classList.add('hidden');
-            }
-        }, 1500); // 1.5 second fake "loading" time
-    });
-
-    // ================================
-    // 🔄 Auto-Redirect If Already Logged In
-    // ================================
-    window.addEventListener('load', function () {
-        // If user is already logged in, skip login page
-        if (localStorage.getItem('isLoggedIn') === 'true') {
-            window.location.href = '/dashboard/';
-        }
-    });
-</script>
-
+        iconClose.addEventListener('click', () => {
+            wrapper.classList.remove('active-popup');
+        });
+    </script>
 </body>
+
 </html>
