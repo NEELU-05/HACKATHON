@@ -165,7 +165,7 @@
         <div class="xl:col-span-2 grid grid-cols-1 gap-8">
           <div class="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow border border-white/50">
             <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Hazard Report</h2>
-            <form method="post" action="/submit-report" class="space-y-4">
+            <form id="report-form" method="post" action="/submit-report" class="space-y-4">
               <div>
                 <label for="hazard-type" class="text-sm font-medium text-gray-700">Hazard Type</label>
                 <select id="hazard-type" name="hazard-type" required
@@ -260,7 +260,7 @@
         <!-- Recent hazard reports -->
         <div class="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow border border-white/50">
           <h2 class="text-lg font-semibold text-gray-800 mb-4">Recent Hazard Reports</h2>
-          <div class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+          <div id="recent-reports-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
             <!-- Example report -->
             <div class="p-3 rounded-lg border border-gray-200 hover:bg-blue-50/50 hover:border-blue-200 transition">
               <div class="flex justify-between items-start">
@@ -324,5 +324,35 @@
       </div>
     </footer>
   </div>
+
+<script>
+document.getElementById('report-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const hazardType = document.getElementById('hazard-type').value;
+  const severity = document.getElementById('severity').value;
+  const location = document.getElementById('location').value;
+  let severityColor = 'green-500';
+  if (severity === 'Severe') severityColor = 'red-500';
+  else if (severity === 'Moderate') severityColor = 'yellow-500';
+  const container = document.getElementById('recent-reports-list');
+  const newReport = document.createElement('div');
+  newReport.className = 'p-3 rounded-lg border border-gray-200 hover:bg-blue-50/50 hover:border-blue-200 transition';
+  newReport.innerHTML = `
+    <div class="flex justify-between items-start">
+      <div>
+        <p class="font-semibold text-blue-800">${hazardType}</p>
+        <span class="text-sm text-gray-600">${location}</span>
+      </div>
+      <span class="text-xs font-medium text-white bg-${severityColor} px-2 py-1 rounded-full">${severity}</span>
+    </div>
+    <div class="flex justify-between text-xs text-gray-500 mt-2">
+      <span class="flex items-center"><span class="material-icons text-sm mr-1">person</span>Citizen Report</span>
+      <span class="flex items-center"><span class="material-icons text-sm mr-1">schedule</span> Just now</span>
+    </div>
+  `;
+  container.insertBefore(newReport, container.firstChild);
+  document.getElementById('report-form').reset();
+});
+</script>
 </body>
 </html>
